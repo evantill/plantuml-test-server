@@ -12,24 +12,28 @@ jobs:
 
       # Store the version, stripping any v-prefix
       - name: Write release version
+        id: write-version
         env:
           EVENT_REF_NAME: "${{ github.event.client_payload.ref }}"
         run: |
           VERSION=${EVENT_REF_NAME#v}
           echo Version: $VERSION
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       # Replace the version in the pom file
+      # https://github.com/marketplace/actions/edit-xml
       - name: Set plantuml version
-        uses: rvolo/xml-replace-action@v0.2
+        uses: Mudlet/xmlstarlet-action@master
+        env:
+          VERSION: ${{ steps.write-version.outputs.VERSION }}
         with:
-          filepath: "pom.xml"
-          xpath: "//plantuml.version/text()"
-          replace: "${{ env.VERSION }}"
+          args: ed -P -L -u "//_:plantuml.version/text()" -v ${{ env.VERSION }} pom.xml
 
       #https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+        env:
+          VERSION: ${{ steps.write-version.outputs.VERSION }}
         with:
           commit-message: "chore: update plantuml lib version to ${{ env.VERSION }}"
           title: "Update plantuml lib version to ${{ env.VERSION }}"
