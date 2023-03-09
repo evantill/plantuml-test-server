@@ -14,9 +14,9 @@ jobs:
       - name: Write release version
         id: write-version
         env:
-          EVENT_REF_NAME: "${{ github.event.client_payload.ref }}"
+          TAG: "${{ github.event.client_payload.tag }}"
         run: |
-          VERSION=${EVENT_REF_NAME#v}
+          VERSION=${TAG#v}
           echo Version: $VERSION
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
