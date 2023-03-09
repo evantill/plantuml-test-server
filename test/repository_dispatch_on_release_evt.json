@@ -1,0 +1,10 @@
+{
+  "client_payload": {
+    "repository": "evantill/plantuml-test-lib",
+    "ref":        "v1.2.3.4",
+    "sha":        "666",
+    "release":    "release v1.2.3.4",
+    "prerelease": "false",
+    "tag":        "v1.2.3.4"
+  }
+}
