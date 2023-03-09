@@ -35,6 +35,7 @@ jobs:
         env:
           VERSION: ${{ steps.write-version.outputs.VERSION }}
         with:
+          branch: "update-plantuml-lib/${{ env.VERSION }}"
           commit-message: "chore: update plantuml lib version to ${{ env.VERSION }}"
           title: "Update plantuml lib version to ${{ env.VERSION }}"
           body: |
