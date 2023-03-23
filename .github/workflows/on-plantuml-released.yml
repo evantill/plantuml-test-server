@@ -1,5 +1,5 @@
 name: On Plantuml Released
-run-name: On Plantuml Released ${{ github.event.client_payload.release }}
+run-name: On Plantuml Released ${{ github.event.client_payload.previous-release }} --> ${{ github.event.client_payload.release }}
 on:
   repository_dispatch:
     types: [evantill/plantuml-test-lib-released]
